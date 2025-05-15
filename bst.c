@@ -52,7 +52,7 @@ int bst_height(Bst* tree) {
     return -1 + bst_height_count(tree->root);
 }
 
-bst_height_count(Node* n) {
+int bst_height_count(Node* n) {
     if (n == NULL)
         return 0;
 
