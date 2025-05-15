@@ -41,17 +41,34 @@ Bst* bst_construct(){
     return tree;
 }
 
-int bst_vazia(Bst* tree) {
+int bst_empty(Bst* tree) {
     if (tree->root == NULL)
         return 1;
     else
         return 0;
 }
 
+int bst_height(Bst* tree) {
+    return -1 + bst_height_count(tree->root);
+}
+
+bst_height_count(Node* n) {
+    if (n == NULL)
+        return 0;
+
+    int height_left = 1 + bst_height_count(n->left);
+    int height_right = 1 + bst_height_count(n->right);
+
+    if (height_right >= height_left)
+        return height_right;
+    else
+        return height_left;
+}
+
 void bst_add(Bst* tree, int value, int key) {
     Node* new = node_construct(key, value);
     
-    if (tree->root == NULL)
+    if (bst_empty(tree))
         tree->root = new;
 
     else
@@ -75,7 +92,7 @@ void bst_put(Node* a, Node* new) {
 }
 
 void bst_destruct(Bst* tree) {
-    if (bst_vazia(tree))
+    if (bst_empty(tree))
         free(tree);
     else
         node_destruct(tree->root);
