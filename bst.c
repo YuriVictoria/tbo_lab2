@@ -11,7 +11,7 @@ struct node {
 };
 
 Node* node_construct(int key, int value) {
-    Node* n = calloc(1, sizeof(Node*));
+    Node* n = calloc(1, sizeof(Node));
 
     n->key = key;
     n->value = value;
@@ -150,8 +150,8 @@ void bst_postorder(Node* n, void (*visit)(Node*)) {
 }
 
 void bst_destruct(BST* tree) {
-    if (bst_empty(tree))
-        free(tree);
-    else
+    if (!bst_empty(tree))
         node_destruct(tree->root);
+
+    free(tree);
 }

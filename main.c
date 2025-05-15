@@ -26,6 +26,7 @@ int main(int argc, char *argv[]) {
     printf("\npost-order:\n");
     bst_rec_postorder(tree, node_print_key);
 
+    bst_destruct(tree);
 
     return 0;
 }
