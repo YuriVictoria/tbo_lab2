@@ -2,6 +2,12 @@
 #include "bst.h"
 
 // Node
+struct node {
+    int key;
+    int value;
+    struct node* left;
+    struct node* right;
+};
 
 Node* node_construct(int key, int value) {
     Node* n = calloc(1, sizeof(Node*));
@@ -43,28 +49,29 @@ int bst_vazia(Bst* tree) {
 }
 
 void bst_add(Bst* tree, int value, int key) {
-    Node* new_n = node_construct(key, value);
+    Node* new = node_construct(key, value);
     
     if (tree->root == NULL)
-        tree->root = new_n;
-        tree->height += 1;
+        tree->root = new;
 
     else
-        bst_put(tree->root, new_n);
+        bst_put(tree->root, new);
 }
 
-void bst_put(Node* a, Node* new_n) {
-    if (new_n->key > a->key)
+void bst_put(Node* a, Node* new) {
+    if (new->key > a->key) {
         if (a->right == NULL)
-            a->right = new_n;
+            a->right = new;
+        else    
+           bst_put(a->right, new);
+    }
+    
+    if (new->key < a->key) {
+        if (a->left == NULL)    
+            a->left = new;
         else
-            bst_put(a->left, new_n);
-
-    else if (new_n->key < a->key)
-        if (a->left == NULL)
-            a->left = new_n;
-        else
-            bst_put(a->left, new_n);
+           bst_put(a->left, new);
+    }
 }
 
 void bst_destruct(Bst* tree) {

@@ -1,22 +1,16 @@
 #ifndef _BST_H_
 #define _BST_H_
 
-typedef struct Node
-{
-    int key;
-    int value;
-    struct Node* left;
-    struct Node* right;
-} Node;
+typedef struct node Node;
 
 typedef struct
 {
-    struct Node* root;
+    Node* root;
     int height;
 } Bst;
 
-Node* node_construct(int key, int value);
-void node_destruct(Node* n);
+Node* node_construct(int key, int value); // Deveriam ser declaradas aqui?
+void node_destruct(Node* n); // Deveriam ser declaradas aqui?
 
 Bst* bst_construct();
 int bst_vazia(Bst* tree);
