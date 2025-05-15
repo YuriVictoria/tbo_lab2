@@ -21,6 +21,10 @@ Node* node_construct(int key, int value) {
     return n;
 }
 
+void node_print_key(Node* n) {
+    printf("(%d)\n", n->key);
+}
+
 void node_destruct(Node* n) {
     if (n->left != NULL)
         node_destruct(n->left);
@@ -66,35 +70,83 @@ int bst_height_count(Node* n) {
         return height_left;
 }
 
-void bst_add(BST* tree, int value, int key) {
+int bst_add(BST* tree, int value, int key) {
     Node* new = node_construct(key, value);
     
-    if (bst_empty(tree))
+    if (bst_empty(tree)) {
         tree->root = new;
+        return 1;
+    }
 
     else
-        bst_put(tree->root, new);
+        return bst_put(tree->root, new);
 }
 
-void bst_put(Node* a, Node* new) {
+int bst_put(Node* a, Node* new) {
     if (new->key > a->key) {
-        if (a->right == NULL)
+        if (a->right == NULL) {
             a->right = new;
-        else    
-           bst_put(a->right, new);
+            return 1;
+        }
+        else
+           return bst_put(a->right, new);
     }
     
     else if (new->key < a->key) {
-        if (a->left == NULL)    
+        if (a->left == NULL) {
             a->left = new;
+            return 1;
+        }    
         else
-           bst_put(a->left, new);
+           return bst_put(a->left, new);
     }
 
-    else if (new->key == a->key) {
-        printf("Chave repetida: %d\n", new->key);
-        node_destruct(new);
+    node_destruct(new);
+    return -1;
+}
+
+void bst_rec_preorder(BST* tree, void (*visit)(Node*)) {
+    if (!bst_empty(tree))
+        bst_preorder(tree->root, visit);
+}
+
+void bst_preorder(Node* n, void (*visit)(Node*)) {
+    if (n == NULL) {
+        return;
     }
+    visit(n);
+    bst_preorder(n->left, visit);
+    bst_preorder(n->right, visit);
+}
+
+void bst_rec_inorder(BST* tree, void (*visit)(Node*)) {
+    if (!bst_empty(tree))
+        bst_inorder(tree->root, visit);
+}
+
+void bst_inorder(Node* n, void (*visit)(Node*)) {
+    if (n == NULL) {
+        return;
+    }
+
+    bst_inorder(n->left, visit);
+    visit(n);
+    bst_inorder(n->right, visit);
+}
+
+void bst_rec_postorder(BST* tree, void (*visit)(Node*)) {
+    if (!bst_empty(tree))
+        bst_postorder(tree->root, visit);
+}
+
+void bst_postorder(Node* n, void (*visit)(Node*)) {
+    if (n == NULL) {
+        return;
+    }
+
+    bst_postorder(n->left, visit);
+    bst_postorder(n->right, visit);
+    visit(n);
 }
 
 void bst_destruct(BST* tree) {

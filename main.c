@@ -9,11 +9,23 @@ int main(int argc, char *argv[]) {
     BST* tree = bst_construct();
 
     for (int i = 0; i < N; i++) {
-        int key = rand();
-        bst_add(tree, key, key);
+        int key = rand()%100;
+        if (bst_add(tree, key, key) != -1) {
+            printf("key: %d\n", key);
+        }
     }
 
-    printf("Altura da árvore: %d\n", bst_height(tree));
+    printf("\nAltura da árvore: %d\n", bst_height(tree));
+
+    printf("\npre-order:\n");
+    bst_rec_preorder(tree, node_print_key);
+    
+    printf("\nin-order:\n");
+    bst_rec_inorder(tree, node_print_key);
+
+    printf("\npost-order:\n");
+    bst_rec_postorder(tree, node_print_key);
+
 
     return 0;
 }
