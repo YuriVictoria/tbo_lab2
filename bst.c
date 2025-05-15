@@ -1,5 +1,6 @@
-#include <stdlib.h>
 #include "bst.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 // Node
 struct node {
@@ -30,10 +31,10 @@ void node_destruct(Node* n) {
     free(n);
 }
 
-// Bst
+// BST
 
-Bst* bst_construct(){
-    Bst* tree = calloc(1, sizeof(Bst));
+BST* bst_construct(){
+    BST* tree = calloc(1, sizeof(BST));
     
     tree->root = NULL;
     tree->height = -1;
@@ -41,14 +42,14 @@ Bst* bst_construct(){
     return tree;
 }
 
-int bst_empty(Bst* tree) {
+int bst_empty(BST* tree) {
     if (tree->root == NULL)
         return 1;
     else
         return 0;
 }
 
-int bst_height(Bst* tree) {
+int bst_height(BST* tree) {
     return -1 + bst_height_count(tree->root);
 }
 
@@ -65,7 +66,7 @@ int bst_height_count(Node* n) {
         return height_left;
 }
 
-void bst_add(Bst* tree, int value, int key) {
+void bst_add(BST* tree, int value, int key) {
     Node* new = node_construct(key, value);
     
     if (bst_empty(tree))
@@ -83,15 +84,20 @@ void bst_put(Node* a, Node* new) {
            bst_put(a->right, new);
     }
     
-    if (new->key < a->key) {
+    else if (new->key < a->key) {
         if (a->left == NULL)    
             a->left = new;
         else
            bst_put(a->left, new);
     }
+
+    else if (new->key == a->key) {
+        printf("Chave repetida: %d\n", new->key);
+        node_destruct(new);
+    }
 }
 
-void bst_destruct(Bst* tree) {
+void bst_destruct(BST* tree) {
     if (bst_empty(tree))
         free(tree);
     else

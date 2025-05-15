@@ -4,13 +4,12 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
-    srand(time(NULL)); // should only be called once
+    srand(time(NULL));
     int N = atoi(argv[1]);
-    Bst* tree = bst_construct();
+    BST* tree = bst_construct();
 
     for (int i = 0; i < N; i++) {
-        int key = rand()%100; // Tem que tirar o resto da divisão depois
-        printf("%d\n", key);
+        int key = rand();
         bst_add(tree, key, key);
     }
 
