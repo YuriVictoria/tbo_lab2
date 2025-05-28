@@ -10,13 +10,13 @@ struct node {
     struct node* right;
 };
 
-Node* node_construct(int key, int value) {
-    Node* n = calloc(1, sizeof(Node));
+Node* node_construct(int key, int value, Node *left, Node *right) {
+    Node* n = (Node*)calloc(1, sizeof(Node));
 
     n->key = key;
     n->value = value;
-    n->left = NULL;
-    n->right = NULL;
+    n->left = left;
+    n->right = right;
 
     return n;
 }
@@ -71,7 +71,7 @@ int bst_height_count(Node* n) {
 }
 
 int bst_add(BST* tree, int value, int key) {
-    Node* new = node_construct(key, value);
+    Node* new = node_construct(key, value, NULL, NULL);
     
     if (bst_empty(tree)) {
         tree->root = new;

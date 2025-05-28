@@ -9,7 +9,7 @@ typedef struct
     int height;
 } BST;
 
-Node* node_construct(int key, int value); // Deveriam ser declaradas aqui?
+Node* node_construct(int key, int value, Node *left, Node *right); // Deveriam ser declaradas aqui?
 void node_print_key(Node* n);
 void node_destruct(Node* n); // Deveriam ser declaradas aqui?
 
